@@ -1,0 +1,953 @@
+<!-- =========================
+BITTO — Production Ready v2
+Improvements:
+✔ Mobile menu
+✔ Sticky WhatsApp button
+✔ Better accessibility
+✔ Better SEO structure
+✔ Cleaner responsive layout
+✔ Image-ready containers
+✔ Improved performance
+✔ Real form structure
+✔ Better UX hierarchy
+========================= -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- SEO -->
+  <title>Bitto — Mediterranean Restaurant in Berawa, Canggu Bali</title>
+
+  <meta
+    name="description"
+    content="Bitto is a Mediterranean restaurant in Berawa, Canggu, Bali. Fresh ingredients, seasonal dishes, and relaxed dining near Berawa Beach."
+  />
+
+  <meta
+    name="keywords"
+    content="Mediterranean restaurant Canggu, Berawa restaurant, dinner Canggu, lunch Berawa, Bali restaurant"
+  />
+
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://bitto.restaurant"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Bitto — Mediterranean Restaurant in Canggu"/>
+  <meta property="og:description" content="Fresh Mediterranean dining in Berawa, Bali."/>
+  <meta property="og:url" content="https://bitto.restaurant"/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=Jost:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Restaurant",
+    "name":"Bitto",
+    "url":"https://bitto.restaurant",
+    "servesCuisine":"Mediterranean",
+    "priceRange":"$$",
+    "address":{
+      "@type":"PostalAddress",
+      "addressLocality":"Canggu",
+      "addressRegion":"Bali",
+      "addressCountry":"ID"
+    },
+    "sameAs":[
+      "https://instagram.com/",
+      "https://maps.google.com/"
+    ]
+  }
+  </script>
+
+  <style>
+
+    /* =========================
+       RESET
+    ========================== */
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Jost',sans-serif;
+      background:#F9F6F1;
+      color:#2B2B2B;
+      line-height:1.7;
+      -webkit-font-smoothing:antialiased;
+    }
+
+    img{
+      width:100%;
+      display:block;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    ul{
+      list-style:none;
+    }
+
+    :root{
+      --clay:#C4A882;
+      --olive:#4A5240;
+      --sand:#F5EFE6;
+      --stone:#E8DDD0;
+      --mist:#F9F6F1;
+      --charcoal:#2B2B2B;
+      --white:#FFFFFF;
+      --radius:4px;
+      --transition:0.25s ease;
+    }
+
+    /* =========================
+       ACCESSIBILITY
+    ========================== */
+
+    .skip-link{
+      position:absolute;
+      top:-100px;
+      left:20px;
+      background:#000;
+      color:#fff;
+      padding:12px;
+      z-index:9999;
+    }
+
+    .skip-link:focus{
+      top:20px;
+    }
+
+    :focus-visible{
+      outline:2px solid var(--clay);
+      outline-offset:3px;
+    }
+
+    /* =========================
+       NAVBAR
+    ========================== */
+
+    nav{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:999;
+      background:rgba(249,246,241,0.94);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--stone);
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      padding:18px 5vw;
+    }
+
+    .nav-logo{
+      font-family:'Playfair Display',serif;
+      font-size:1.6rem;
+      color:var(--olive);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:2rem;
+      align-items:center;
+    }
+
+    .nav-links a{
+      font-size:0.8rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      opacity:0.7;
+      transition:var(--transition);
+    }
+
+    .nav-links a:hover{
+      opacity:1;
+    }
+
+    .nav-cta{
+      background:var(--olive);
+      color:white !important;
+      padding:12px 18px;
+      border-radius:var(--radius);
+      opacity:1 !important;
+    }
+
+    /* MOBILE MENU */
+
+    .hamburger{
+      display:none;
+      flex-direction:column;
+      gap:5px;
+      cursor:pointer;
+    }
+
+    .hamburger span{
+      width:24px;
+      height:2px;
+      background:var(--charcoal);
+    }
+
+    .mobile-menu{
+      position:fixed;
+      inset:0;
+      background:var(--mist);
+      z-index:998;
+
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+
+      gap:2rem;
+
+      transform:translateY(-100%);
+      transition:0.35s ease;
+    }
+
+    .mobile-menu.active{
+      transform:translateY(0);
+    }
+
+    .mobile-menu a{
+      font-size:1rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+    }
+
+    /* =========================
+       HERO
+    ========================== */
+
+    .hero{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      padding-top:90px;
+    }
+
+    .hero-content{
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      padding:6vw;
+    }
+
+    .hero-tag{
+      color:var(--clay);
+      text-transform:uppercase;
+      letter-spacing:0.22em;
+      font-size:0.72rem;
+      margin-bottom:1.4rem;
+      font-weight:600;
+    }
+
+    .hero h1{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(3rem,6vw,5.5rem);
+      line-height:1.05;
+      margin-bottom:1.5rem;
+    }
+
+    .hero h1 em{
+      color:var(--olive);
+      font-style:italic;
+    }
+
+    .hero p{
+      max-width:38ch;
+      opacity:0.68;
+      margin-bottom:2rem;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:1rem;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:15px 24px;
+      border-radius:var(--radius);
+      transition:var(--transition);
+      font-size:0.82rem;
+      text-transform:uppercase;
+      letter-spacing:0.1em;
+      font-weight:500;
+    }
+
+    .btn-primary{
+      background:var(--olive);
+      color:white;
+    }
+
+    .btn-primary:hover{
+      background:#31392A;
+      transform:translateY(-2px);
+    }
+
+    .btn-secondary{
+      border:1px solid var(--stone);
+    }
+
+    .btn-secondary:hover{
+      background:var(--stone);
+    }
+
+    /* HERO IMAGE */
+
+    .hero-image{
+      position:relative;
+      overflow:hidden;
+      background:#D6C5B1;
+    }
+
+    .hero-image img{
+      height:100%;
+      object-fit:cover;
+    }
+
+    .image-placeholder{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      background:
+      radial-gradient(circle at top left, rgba(255,255,255,0.2), transparent),
+      linear-gradient(135deg,#D4C4AE,#A88E70);
+
+      font-family:'Playfair Display',serif;
+      font-size:6rem;
+      color:rgba(255,255,255,0.18);
+    }
+
+    .hero-badge{
+      position:absolute;
+      bottom:30px;
+      left:30px;
+
+      background:rgba(255,255,255,0.85);
+      backdrop-filter:blur(10px);
+
+      padding:16px 20px;
+      border-left:3px solid var(--clay);
+    }
+
+    .hero-badge strong{
+      display:block;
+      font-family:'Playfair Display',serif;
+    }
+
+    .hero-badge span{
+      font-size:0.78rem;
+      opacity:0.6;
+    }
+
+    /* =========================
+       SECTION
+    ========================== */
+
+    section{
+      padding:120px 5vw;
+    }
+
+    .section-label{
+      color:var(--clay);
+      text-transform:uppercase;
+      letter-spacing:0.2em;
+      font-size:0.7rem;
+      margin-bottom:1rem;
+      font-weight:600;
+    }
+
+    .section-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,4vw,3.2rem);
+      margin-bottom:1rem;
+      line-height:1.15;
+    }
+
+    .section-body{
+      max-width:60ch;
+      opacity:0.7;
+    }
+
+    /* =========================
+       ABOUT
+    ========================== */
+
+    .about{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:6vw;
+      align-items:center;
+      background:white;
+    }
+
+    .about-image{
+      aspect-ratio:4/5;
+      background:#D9CCBC;
+      overflow:hidden;
+    }
+
+    .about-image img{
+      height:100%;
+      object-fit:cover;
+    }
+
+    .about-values{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1.5rem;
+      margin-top:3rem;
+    }
+
+    .about-values h4{
+      font-family:'Playfair Display',serif;
+      margin-bottom:0.4rem;
+      color:var(--olive);
+    }
+
+    .about-values p{
+      opacity:0.65;
+      font-size:0.9rem;
+    }
+
+    /* =========================
+       MENU
+    ========================== */
+
+    .menu{
+      background:var(--mist);
+    }
+
+    .menu-grid{
+      margin-top:3rem;
+
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1px;
+
+      background:var(--stone);
+    }
+
+    .menu-card{
+      background:var(--mist);
+      padding:2rem;
+    }
+
+    .menu-category{
+      color:var(--clay);
+      text-transform:uppercase;
+      letter-spacing:0.18em;
+      font-size:0.7rem;
+      margin-bottom:1.5rem;
+      font-weight:600;
+    }
+
+    .menu-item{
+      padding:1rem 0;
+      border-bottom:1px solid var(--stone);
+    }
+
+    .menu-item:last-child{
+      border-bottom:none;
+    }
+
+    .menu-header{
+      display:flex;
+      justify-content:space-between;
+      gap:1rem;
+    }
+
+    .menu-name{
+      font-family:'Playfair Display',serif;
+    }
+
+    .menu-price{
+      color:var(--olive);
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .menu-desc{
+      margin-top:0.3rem;
+      font-size:0.85rem;
+      opacity:0.6;
+    }
+
+    /* =========================
+       RESERVE
+    ========================== */
+
+    .reserve{
+      background:var(--sand);
+      text-align:center;
+    }
+
+    .reserve-form{
+      margin-top:3rem;
+
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:1rem;
+
+      max-width:900px;
+      margin-inline:auto;
+    }
+
+    .reserve-form input{
+      width:100%;
+      padding:16px;
+      border:1px solid var(--stone);
+      background:white;
+      font-family:'Jost',sans-serif;
+    }
+
+    /* =========================
+       FOOTER
+    ========================== */
+
+    footer{
+      background:var(--charcoal);
+      color:white;
+
+      padding:50px 5vw;
+
+      display:flex;
+      justify-content:space-between;
+      gap:2rem;
+      flex-wrap:wrap;
+    }
+
+    .footer-logo{
+      font-family:'Playfair Display',serif;
+      font-size:1.5rem;
+    }
+
+    .footer-copy{
+      opacity:0.45;
+      font-size:0.8rem;
+    }
+
+    /* =========================
+       FLOATING WHATSAPP
+    ========================== */
+
+    .floating-wa{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+
+      background:#25D366;
+      color:white;
+
+      width:60px;
+      height:60px;
+
+      border-radius:50%;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      font-size:1.5rem;
+
+      z-index:999;
+      box-shadow:0 10px 25px rgba(0,0,0,0.18);
+    }
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media(max-width:900px){
+
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .hero-image{
+        min-height:60vw;
+      }
+
+      .about{
+        grid-template-columns:1fr;
+      }
+
+      .about-image{
+        aspect-ratio:16/10;
+      }
+
+    }
+
+    @media(max-width:768px){
+
+      .nav-links{
+        display:none;
+      }
+
+      .hamburger{
+        display:flex;
+      }
+
+      .hero-content{
+        padding:4rem 6vw;
+      }
+
+      section{
+        padding:90px 6vw;
+      }
+
+      .about-values{
+        grid-template-columns:1fr;
+      }
+
+      footer{
+        flex-direction:column;
+        text-align:center;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ACCESSIBILITY -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- NAV -->
+  <nav>
+
+    <a href="/" class="nav-logo">Bitto</a>
+
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#reserve">Reserve</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+    <a href="#reserve">Reserve</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- HERO -->
+    <header class="hero">
+
+      <div class="hero-content">
+
+        <p class="hero-tag">
+          Mediterranean • Berawa • Canggu • Bali
+        </p>
+
+        <h1>
+          Simple food,<br>
+          <em>honest flavors</em>
+        </h1>
+
+        <p>
+          Fresh Mediterranean dining in the heart of Berawa. Seasonal dishes, warm hospitality, and relaxed evenings inspired by the Mediterranean coast.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#reserve" class="btn btn-primary">
+            Book a Table
+          </a>
+
+          <a href="#menu" class="btn btn-secondary">
+            View Menu
+          </a>
+        </div>
+
+      </div>
+
+      <div class="hero-image">
+
+        <!-- REPLACE WITH YOUR IMAGE -->
+        <!--
+        <img
+          src="./images/hero.webp"
+          alt="Mediterranean dishes at Bitto restaurant in Canggu"
+          loading="eager"
+        />
+        -->
+
+        <div class="image-placeholder">
+          Bitto
+        </div>
+
+        <div class="hero-badge">
+          <strong>Now Open</strong>
+          <span>Daily 11am — 10pm</span>
+        </div>
+
+      </div>
+
+    </header>
+
+    <!-- ABOUT -->
+    <section class="about" id="about">
+
+      <div class="about-image">
+
+        <!-- REPLACE WITH IMAGE -->
+        <!--
+        <img
+          src="./images/about.webp"
+          alt="Interior of Bitto restaurant"
+          loading="lazy"
+        />
+        -->
+
+      </div>
+
+      <div>
+
+        <p class="section-label">Our Story</p>
+
+        <h2 class="section-title">
+          A Mediterranean table in Bali
+        </h2>
+
+        <p class="section-body">
+          Bitto is built around fresh ingredients, simple cooking, and long conversations around the table. Inspired by Mediterranean coastal dining and rooted in Berawa.
+        </p>
+
+        <div class="about-values">
+
+          <div>
+            <h4>Fresh First</h4>
+            <p>Seasonal ingredients sourced daily.</p>
+          </div>
+
+          <div>
+            <h4>Simple Done Well</h4>
+            <p>Clean flavors without unnecessary complexity.</p>
+          </div>
+
+          <div>
+            <h4>Warm Hospitality</h4>
+            <p>Relaxed dining for lunch, dinner, and gatherings.</p>
+          </div>
+
+          <div>
+            <h4>Rooted in Canggu</h4>
+            <p>Built for locals, travelers, and the Bali community.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- MENU -->
+    <section class="menu" id="menu">
+
+      <p class="section-label">What We Serve</p>
+
+      <h2 class="section-title">
+        Mediterranean classics & house favorites
+      </h2>
+
+      <div class="menu-grid">
+
+        <div class="menu-card">
+
+          <p class="menu-category">Starters</p>
+
+          <div class="menu-item">
+            <div class="menu-header">
+              <span class="menu-name">Hummus & Warm Pita</span>
+              <span class="menu-price">65k</span>
+            </div>
+            <p class="menu-desc">
+              Smoked paprika, olive oil, herbs
+            </p>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-header">
+              <span class="menu-name">Burrata & Tomato</span>
+              <span class="menu-price">95k</span>
+            </div>
+            <p class="menu-desc">
+              Heirloom tomato, basil, sea salt
+            </p>
+          </div>
+
+        </div>
+
+        <div class="menu-card">
+
+          <p class="menu-category">Mains</p>
+
+          <div class="menu-item">
+            <div class="menu-header">
+              <span class="menu-name">Lamb Kofta</span>
+              <span class="menu-price">175k</span>
+            </div>
+            <p class="menu-desc">
+              Tzatziki, grilled flatbread, herbs
+            </p>
+          </div>
+
+          <div class="menu-item">
+            <div class="menu-header">
+              <span class="menu-name">Sea Bream</span>
+              <span class="menu-price">195k</span>
+            </div>
+            <p class="menu-desc">
+              Lemon butter, roasted vegetables
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- RESERVE -->
+    <section class="reserve" id="reserve">
+
+      <p class="section-label">Reservations</p>
+
+      <h2 class="section-title">
+        Reserve your table
+      </h2>
+
+      <p class="section-body" style="margin-inline:auto;">
+        Walk-ins are welcome, but reservations are recommended for evenings and weekends.
+      </p>
+
+      <form class="reserve-form">
+
+        <input
+          type="text"
+          placeholder="Your Name"
+          required
+        />
+
+        <input
+          type="date"
+          required
+        />
+
+        <input
+          type="number"
+          placeholder="Guests"
+          min="1"
+          max="20"
+          required
+        />
+
+        <a
+          href="https://wa.me/62xxxxxxxxxx"
+          class="btn btn-primary"
+          target="_blank"
+        >
+          Book via WhatsApp
+        </a>
+
+      </form>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+
+    <div>
+      <div class="footer-logo">Bitto</div>
+      <p class="footer-copy">
+        Mediterranean Restaurant • Berawa • Canggu • Bali
+      </p>
+    </div>
+
+    <div class="footer-copy">
+      © 2026 Bitto. All rights reserved.
+    </div>
+
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a
+    href="https://wa.me/62xxxxxxxxxx"
+    target="_blank"
+    class="floating-wa"
+    aria-label="Chat on WhatsApp"
+  >
+    ✆
+  </a>
+
+  <!-- JS -->
+  <script>
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+    });
+
+    // Close menu on link click
+
+    document.querySelectorAll('.mobile-menu a')
+      .forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('active');
+        });
+      });
+
+  </script>
+
+</body>
+</html>
